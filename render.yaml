@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: mykare-backend
+    runtime: python
+    plan: free
+    region: singapore
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_REALTIME_MODEL
+        value: gpt-4o-realtime-preview-2024-12-17
+      - key: OPENAI_SUMMARY_MODEL
+        value: gpt-4o-mini
+      - key: OPENAI_REALTIME_VOICE
+        value: sage
+      - key: CORS_ORIGINS
+        sync: false
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:///./mykare.db
+      - key: CLINIC_NAME
+        value: Mykare Health
+      - key: CLINIC_PROVIDERS
+        value: Dr. Aisha Khan,Dr. Rohan Mehta,Dr. Priya Sharma
